@@ -1,0 +1,20 @@
+<h1>掲示板</h1>
+
+<%= form_for(@message) do |f| %>
+  <% if @message.errors.any? %>
+    <% @message.errors.full_messages.each do |err| %>
+      <font color="red"><%= err %></font><br>
+    <% end %>
+  <% end %>
+
+  <div><%= f.text_field :title %></div>
+  <div><%= f.text_area :body %></div>
+  <%= f.submit %><br>
+<% end %>
+<hr>
+
+<% @messages.each do |msg| %>
+  <%= msg.id %> : <%= msg.title %> : <%= msg.created_at %><br>
+  <pre><%= msg.body %></pre>
+  <br>
+<% end %>
