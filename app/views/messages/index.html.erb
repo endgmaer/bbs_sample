@@ -1,4 +1,4 @@
-<h1>掲示板</h1>
+<h1>簡易掲示板</h1>
 
 <%= form_for(@message) do |f| %>
   <% if @message.errors.any? %>
@@ -7,14 +7,21 @@
     <% end %>
   <% end %>
 
-  <div><%= f.text_field :title %></div>
-  <div><%= f.text_area :body %></div>
-  <%= f.submit %><br>
+  <font size="1">投稿</font>
+  <div><%= f.text_field :title, :placeholder => "お名前を入力してください" %></div>
+  <div><%= f.password_field :deletepwd, :placeholder => "削除用パスワードを入力" %></div>
+  <div><%= f.text_area :body, :placeholder => "投稿内容を入力してください"  %></div>
+  <%= f.submit:投稿する %><br>
 <% end %>
 <hr>
+<%= search_form_for @search do |f| %>
+ <%= f.text_field :keywords, required: false, value: params.dig(:q, :keywords), class: 'form-control', :placeholder => "検索ワードを入力" %><%= f.submit '検索する' %>
+<% end %>
 
 <% @messages.each do |msg| %>
   <%= msg.id %> : <%= msg.title %> : <%= msg.created_at %><br>
   <pre><%= msg.body %></pre>
-  <br>
+　
+  </div>
+
 <% end %>
