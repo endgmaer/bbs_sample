@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 
-  # 表示
+# 表示
   def index
     @messages = Message.message_list
     @message = Message.new
