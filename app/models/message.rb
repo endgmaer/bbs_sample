@@ -7,13 +7,5 @@ class Message < ActiveRecord::Base
     return Message.all.order(:created_at => :desc)
   end
 
-  scope :with_keywords, -> keywords {
-    if keywords.present?
-      columns = [:description]
-      where(keywords.split(/[[:space:]]/).reject(&:empty?).map {|keyword|
-        columns.map { |a| arel_table[a].matches("%#{keyword}%") }.inject(:or)
-      }.inject(:and))
-    end
-  };
 
 end

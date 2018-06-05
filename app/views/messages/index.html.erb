@@ -8,20 +8,39 @@
   <% end %>
 
   <font size="1">投稿</font>
-  <div><%= f.text_field :title, :placeholder => "お名前を入力してください" %></div>
-  <div><%= f.password_field :deletepwd, :placeholder => "削除用パスワードを入力" %></div>
-  <div><%= f.text_area :body, :placeholder => "投稿内容を入力してください"  %></div>
+  <div><%= f.text_field :title, :placeholder => 
+  "お名前を入力してください" %></div>
+  <div><%= f.password_field :deletepwd, :placeholder => 
+  "削除用パスワードを入力" %></div>
+  <div><%= f.text_area :body, :placeholder => 
+  "投稿内容を入力してください"  %></div>
   <%= f.submit:投稿する %><br>
 <% end %>
 <hr>
+
 <%= search_form_for @search do |f| %>
- <%= f.text_field :keywords, required: false, value: params.dig(:q, :keywords), class: 'form-control', :placeholder => "検索ワードを入力" %><%= f.submit '検索する' %>
+    <%= f.select :s,[["post acs"], ["post desc"]] %>
 <% end %>
 
+
+<%# search_form_for を使うことで検索フォームを作成 %>
+<%= search_form_for @q do |f| %>
+　  <%# cont 文字列が含まれる商品説明で検索（not_cont で含まれない商品説明） %>
+    <%= f.search_field :body_cont, :placeholder =>
+     "検索ワードを入力" %>
+    <%= f.submit '検索する' %>
+    <br />
+<% end %>
+
+<div> <%= paginate @messages %></div>
+
 <% @messages.each do |msg| %>
-  <%= msg.id %> : <%= msg.title %> : <%= msg.created_at %><br>
+  <%= msg.id %> : <%= msg.title %> : 
+  <%= msg.created_at %><br>
   <pre><%= msg.body %></pre>
 　
   </div>
 
 <% end %>
+
+<div> <%= paginate @messages %></div>

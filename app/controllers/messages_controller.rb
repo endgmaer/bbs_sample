@@ -1,24 +1,34 @@
 class MessagesController < ApplicationController
-
+  PER = 5
 
 # 表示 検索
   def index
     @messages = Message.message_list
     @message = Message.new
     @search = Message.search(params[:q])
-    @topics = @search.result
-    @q = Message.with_keywords(params.dig(:q, :keywords)).ransack(params[:q])
-    @keywords = @q.result
+    #@search.build_sort if @search.sorts.empty?
+    #@topics = @search.result
+    @q = Message.search(params[:q])
+    @messages = @q.result(distinct: true)
+    @messages = Message.page(params[:page]).per(PER)
     
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @messages }
-    end
+    #respond_to do |format|
+      #format.html # index.html.erb
+      #format.json { render json: @messages }
+    #end
   end
+
+  #def search
+    #params[:q] ||= {}
+    #params[:q][:s] = %w(author_id category_name created) # 複数指定は配列を渡す
+    #@q = Message.search params[:q]
+    #@q.result
+  #end
 
   # 書き込み
   def create
-    @message = Message.new(params.require(:message).permit(:title, :body))
+    @message = Message.new(params.require(:message)
+      .permit(:title, :body))
     if @message.save
       redirect_to :action => :index
     else
@@ -28,11 +38,11 @@ class MessagesController < ApplicationController
   end
 
   # 削除
-  def destroy
-    @messages = Message.find(params[:board_id])
-    @message = Message.find(params[:id])
-    @message.destroy
-    redirect_to messages_list(@messages)
-  end
+  #def destroy
+    #@messages = Message.find(params[:board_id])
+    #@message = Message.find(params[:id])
+    #@message.destroy
+    #redirect_to messages_list(@messages)
+  #end
 
 end

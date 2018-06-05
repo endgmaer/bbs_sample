@@ -16,6 +16,8 @@ gem 'geocoder', '~> 1.4', '>= 1.4.9'
 gem 'coderay', '~> 1.1', '>= 1.1.2'
 gem 'binding_of_caller'
 gem 'ransack'
+gem 'kaminari'
+
 
 
 group :development, :test do
