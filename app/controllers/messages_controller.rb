@@ -1,8 +1,9 @@
 class MessagesController < ApplicationController
-  PER = 5
+  
 
 # 表示 検索
   def index
+    @messages = Message.all
     @messages = Message.message_list
     @message = Message.new
     @search = Message.search(params[:q])
@@ -10,7 +11,11 @@ class MessagesController < ApplicationController
     #@topics = @search.result
     @q = Message.search(params[:q])
     @messages = @q.result(distinct: true)
-    @messages = Message.page(params[:page]).per(PER)
+    @messages = Message.page(params[:page]).per(5)
+      if params[:all]#なぜallが反映されないか不明
+         @messages = @messages.per(Message.count) 
+         # you can also hardcod' it
+      end
     
     #respond_to do |format|
       #format.html # index.html.erb
@@ -27,10 +32,10 @@ class MessagesController < ApplicationController
 
   # 書き込み
   def create
-    @message = Message.new(params.require(:message)
-      .permit(:title, :body))
+    @message = Message.create(params.require(:message)
+      .permit(:title, :password, :body))
     if @message.save
-      redirect_to :action => :index
+      
     else
       @messages = Message.message_list
       render :index
@@ -38,11 +43,11 @@ class MessagesController < ApplicationController
   end
 
   # 削除
-  #def destroy
-    #@messages = Message.find(params[:board_id])
-    #@message = Message.find(params[:id])
-    #@message.destroy
-    #redirect_to messages_list(@messages)
-  #end
+  def destroy
+    @message = Message.find(params[:id])
+    @message.delete
+    redirect_to :action => :index
+    #@posting.errors.messages
+  end
 
 end
