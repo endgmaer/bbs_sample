@@ -11,11 +11,12 @@ class MessagesController < ApplicationController
     #@topics = @search.result
     @q = Message.search(params[:q])
     @messages = @q.result(distinct: true)
-    @messages = Message.page(params[:page]).per(5)
-      if params[:all]#なぜallが反映されないか不明
-         @messages = @messages.per(Message.count) 
-         # you can also hardcod' it
-      end
+    @messages = Message.page(params[:page])
+    if params[:all].present?
+       @messages = @messages.page(params[:page])
+    else
+       @messages = @messages.page(params[:page]).per(5)
+    end
     
     #respond_to do |format|
       #format.html # index.html.erb
