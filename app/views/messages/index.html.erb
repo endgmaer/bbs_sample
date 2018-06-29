@@ -1,54 +1,63 @@
 <h1>簡易掲示板</h1>
 
-<%= form_for(@message) do |f| %>
-  <font size="2">投稿</font>
-    <div><%= f.text_field :title, :size=>"25", :placeholder => 
-    "お名前を入力してください" %></div>
-    <div><%= f.password_field :password, :size=>"25",:placeholder => "削除用パスワードを入力" %></div> 
-    <div><%= f.text_area :body, :size=>"30x7", :placeholder => "投稿内容を入力してください"  %>
-    </div>
-    <%= f.submit:投稿する %>
-    <% if @message.errors.any? %>
-    <% @message.errors.full_messages.each do |err| %>
-      <font color="red"><%= err %></font><br>
-    <% end %>
+<% if @message.errors.present? %>
+  <% @message.errors.full_messages.each do |err| %>
+    <p style="color: red"><%= err %></p>
     <br>
   <% end %>
+  <br>
+<% end %>
+
+<%= form_for(@message) do |f| %>
+  <font size="2">投稿</font>
+  <div>
+    <%= f.text_field :title, :size => "25", placeholder: 'お名前を入力してください' %>
+  </div>
+  <div>
+    <%= f.password_field :password, size: '25', placeholder: '削除用パスワードを入力' %>
+  </div>
+  <div>
+    <%= f.text_area :body, size: '30x7', placeholder: '投稿内容を入力してください' %>
+  </div>
+  <%= f.submit '投稿する' %>
 <% end %>
 <hr>
 
 <div>
-<th><%= link_to "新着順", :sort => "released_at" %></th>
-<th><%= link_to "投稿者名順", :sort => "name" %></th>
-<th><%= link_to "古い順", :sort => "released_at" %></th>
+  <th><%= link_to "新着順", sort: :lreleased_at %></th>
+  <th><%= link_to "投稿者名順", sort: :name %></th>
+  <th><%= link_to "古い順", sort: :released_at %></th>
+</div>
 
 
-  <%= form_for @message do |f| %>
-  <%= f.select :created_at,[["新着順","acs"], ["名前順","name"], ["古い順","desc"]], {class: 'CreateMessages'} %>
+<%= form_for @message do |f| %>
+  <%=
+    f.select :created_at,
+             [["新着順", "acs"], ["名前順", "name"], ["古い順", "desc"]],
+             { class: 'CreateMessages' }
+  %>
 
   <%= search_form_for @search do |f| %>
-    <%= f.search_field :body_cont,
-    :placeholder =>"検索ワードを入力" %>
+    <%= f.search_field :body_cont, placeholder: '検索ワードを入力' %>
     <%= f.submit %>
-    
+  <% end %>
+
+  <div>
+    <%= paginate @messages %>
   </div>
-<% end %>
-
-
-
-<div> <%= paginate @messages %></div>
 <% end %>
 
 <div>
   <% @messages.each do |msg| %>
-    <%= msg.id %> : <%= msg.title %> : 
-    <%= msg.created_at.to_s(:datetime_jp) %><br>
-    <pre><%= msg.body %>
-  <%= link_to '削除', message_path(messages),
-    method: :delete, 
-    data: {confirm: "削除してもよろしいですか？"} %>
-  </pre>
+    <%= msg.id %> : <%= msg.title %> : <%= msg.created_at.to_s(:datetime_jp) %>
+    <br>
+    <pre>
+      <%= msg.body %>
+      <%= link_to '削除', message_path(msg), method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
+    </pre>
+  <% end %>
 </div>
-<% end %>
 
-<div> <%= paginate @messages %></div>
+<div>
+  <%= paginate @messages %>
+</div>
