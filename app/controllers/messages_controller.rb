@@ -4,24 +4,18 @@ class MessagesController < ApplicationController
 
   # NOTE: 表示 検索
   def index
-    @messages = Message.all
-    @messages = Message.message_list
     @message = Message.new
-    #@search = Message.ransack(params[:q])
-    #@search.build_sort if @search.sorts.empty?
     @q = Message.search(params[:q])
     @messages = @q.result(distinct: true)
-    #@messages = Message.order(params[:sort] + ' ' + params[:direction])
-    #@orders = Message.order(params[:sortway])
-    @messages = Message.page(params[:page])
-    if params[:all].present?
-      @messages = @messages.page(params[:page])
-    else
+
+    if params[:all].blank?
       @messages = @messages.page(params[:page]).per(5)
     end
+
+    @messages = @messages.order_created_at_desc
   end
 
-  # NOTE:書き込み
+  # NOTE: 書き込み
   def create
     @message = Message.new(message_params)
 
