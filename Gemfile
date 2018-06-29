@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.1'
 gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -10,8 +10,6 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'geocoder', '~> 1.4', '>= 1.4.9'
-gem 'coderay', '~> 1.1', '>= 1.1.2'
 gem 'binding_of_caller'
 gem 'ransack'
 gem 'kaminari'
