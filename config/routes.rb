@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root 'application#index'
+  root 'messages#index'
 
   resources :messages, only: [:index, :create, :destroy]
 end
