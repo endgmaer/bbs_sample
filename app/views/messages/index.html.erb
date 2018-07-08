@@ -21,21 +21,13 @@
   </div>
   <%= f.submit '投稿する' %>
 <% end %>
-<hr>
 
-<div>
-  <tr>
-    <th><%= link_to "新着順", sort: :lreleased_at %></th>
-    <th><%= link_to "投稿者名順", sort: :name %></th>
-    <th><%= link_to "古い順", sort: :released_at %></th>
-  </tr>
-</div>
+<hr>
 
 <div>
   <%=
     select_tag 'sort_order',
-               options_for_select([["新着順", "asc"], ["名前順", "name"], ["古い順", "desc"]]),
-               { class: 'CreateMessages' }
+               options_for_select([["新着順", "#{sort_url @search, :created_at, default_order: :asc}"], ["名前順", "#{sort_url @search, :title, default_order: :asc}"], ["古い順", "#{sort_url @search, :created_at, default_order: :desc}"]])
   %>
 
   <%= search_form_for @search do |f| %>
@@ -44,21 +36,24 @@
   <% end %>
 </div>
 
+<br>
+
 <div>
   <%= paginate @messages %>
 </div>
 
-<%= form_for @message do |f| %>
+<br>
+
+<% @messages.each do |message| %>
   <div>
-    <% @messages.each do |msg| %>
-      <%= msg.id %> : <%= msg.title %> : <%= msg.created_at.to_s(:datetime_jp) %>
-      <br>
-      <pre>
-      <%= msg.body %>
-        <%= link_to '削除', message_path(msg), method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
-    </pre>
-    <% end %>
+    <%= message.id %> : <%= message.title %> : <%= message.created_at.to_s(:datetime_jp) %>
+    <br>
+    <%= message.body %>
   </div>
+  <%= form_for(message, url: message_path(id: message.id), method: :delete) do |f| %>
+    <%= f.text_field :password, placeholder: '削除パスワードを入力' %>
+    <%= f.submit '削除' %>
+  <% end %>
 <% end %>
 
 <div>

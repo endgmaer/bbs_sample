@@ -5,14 +5,17 @@ class MessagesController < ApplicationController
   # NOTE: 表示 検索
   def index
     @message = Message.new
+
     @q = Message.search(params[:q])
-    @messages = @q.result(distinct: true)
+
+    @q.sorts = 'created_at asc' if @q.sorts.blank?
+
+    @messages = @q.result
 
     if params[:all].blank?
       @messages = @messages.page(params[:page]).per(5)
     end
 
-    @messages = @messages.order_created_at_desc
   end
 
   # NOTE: 書き込み
@@ -27,6 +30,20 @@ class MessagesController < ApplicationController
     end
   end
 
+  # 削除
+  def destroy
+    @message = Message.find(params[:id])
+
+    # TODO: 削除用パスワードvalidation作成
+    if @message.password == params.require(:message)[:password] && @message.destroy!
+      flash[:notice] = '削除ok'
+      redirect_to :action => :index
+    else
+      flash[:notice] = '削除ng'
+      redirect_to :action => :index
+    end
+  end
+
   def set_search
     @search = Message.search(params[:q])
   end
@@ -37,7 +54,8 @@ class MessagesController < ApplicationController
     params.require(:message)
       .permit(
         :title,
-        :body
+        :body,
+        :password
       )
   end
 
@@ -55,12 +73,4 @@ class MessagesController < ApplicationController
   #@q = Message.search params[:q]
   #@q.result
   #end
-
-  # 削除
-  def destroy
-    @message = Message.find(params[:id])
-    @message.destroy
-    redirect_to :action => :index
-    #@posting.errors.messages
-  end
 end
