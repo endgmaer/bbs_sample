@@ -24,10 +24,10 @@
 <% end %>
 
 <hr>
-<%= select_tag 'sort_order', options_for_select
-  ([["新着順", "#{sort_link @q, :created_at}"], 
-    ["名前順", "#{sort_link @q, :name}"], 
-    ["古い順", "#{sort_link @q, :updated_at}"]])%>
+<%= select_tag 'sort_order', 
+    options_for_select([["新着順", "#{sort_link @q, :created_at}"], 
+                        ["名前順", "#{sort_link @q, :name}"], 
+                        ["古い順", "#{sort_link @q, :updated_at}"]])%>
 
 <%= search_form_for @q do |f| %>
   <%= f.search_field :title_cont, :placeholder => "検索ワードを入力" %>
