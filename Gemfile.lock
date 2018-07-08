@@ -199,7 +199,6 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
-  pry (~> 0.11.3)
   pry-byebug
   rails (= 4.2.6)
   ransack
