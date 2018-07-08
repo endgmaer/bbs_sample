@@ -2,57 +2,50 @@
 
 <%= form_for(@message) do |f| %>
   <font size="2">投稿</font>
-    <div><%= f.text_field :title, :size=>"25", :placeholder => 
-    "お名前を入力してください" %></div>
-    <div><%= f.password_field :deletepwd, :size=>"25",:placeholder => "削除用パスワードを入力" %></div> 
-    <div><%= f.text_area :body, :size=>"30x7", :placeholder => "投稿内容を入力してください"  %>
-    </div>
-    <%= f.submit:投稿する %>
-    <% if @message.errors.any? %>
+  <div>
+    <%= f.text_field :title, :size => "25", :placeholder => "お名前を入力してください" %>
+  </div>
+  <div>
+    <%= f.password_field :deletepwd, :size => "25", :placeholder => "削除用パスワードを入力" %>
+  </div>
+  <div>
+    <%= f.text_area :body, :size => "30x7", :placeholder => "投稿内容を入力してください" %>
+  </div>
+  <%= f.submit '投稿する' %>
+  <% if @message.errors.any? %>
     <% @message.errors.full_messages.each do |err| %>
-      <font color="red"><%= err %></font><br>
+      <font color="red">
+        <%= err %>
+      </font>
+      <br>
     <% end %>
     <br>
   <% end %>
 <% end %>
+
 <hr>
 
-<div>
-  <%= search_form_for @q do |f| %>
-    <form name="sort_form">
-      <select name="sort" onchange="dropsort()">
-        <option value=""> 並び替え </option>
-        <option value="http://localhost:3000/?order=updated_at">
-        新着順</option>
-        <option value=>
-        名前順</option>
-        <option value="/messages">
-        古い順</option>
-      </select>
-    </form>
-
-
-  <%= search_form_for @q do |f| %>
-    <%= f.search_field :title_cont,
-    :placeholder =>"検索ワードを入力" %>
+<%= search_form_for @q do |f| %>
+  <%= f.search_field :title_cont, :placeholder => "検索ワードを入力" %>
   <%= f.submit %>
-    
-</div>
 <% end %>
 
-<div> <%= paginate @messages %></div>
-<% end %>
+<div>
+  <%= paginate @messages %>
+</div>
 
 <div>
   <% @messages.each do |msg| %>
-    <%= msg.id %> : <%= msg.title %> : 
-    <%= msg.created_at.to_s(:datetime_jp) %><br>
-    <pre><%= msg.body %>
-  <%= link_to '削除', message_path(msg),
-    method: :delete, 
-    data: {confirm: "削除してもよろしいですか？"} %>
-  </pre>
+    <%= msg.id %> : <%= msg.title %> : <%= msg.created_at.to_s(:datetime_jp) %><br>
+    <pre>
+      <%= msg.body %>
+      <%= link_to '削除', message_path(msg),
+                  method: :delete,
+                  data: { confirm: "削除してもよろしいですか？" } %>
+    </pre>
+  <% end %>
 </div>
-<% end %>
 
-<div> <%= paginate @messages %></div>
+<div>
+  <%= paginate @messages %>
+</div>
