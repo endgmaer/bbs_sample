@@ -4,7 +4,7 @@
   <font size="2">投稿</font>
     <div><%= f.text_field :title, :size=>"25", :placeholder => 
     "お名前を入力してください" %></div>
-    <div><%= f.password_field :password, :size=>"25",:placeholder => "削除用パスワードを入力" %></div> 
+    <div><%= f.password_field :deletepwd, :size=>"25",:placeholder => "削除用パスワードを入力" %></div> 
     <div><%= f.text_area :body, :size=>"30x7", :placeholder => "投稿内容を入力してください"  %>
     </div>
     <%= f.submit:投稿する %>
@@ -18,23 +18,27 @@
 <hr>
 
 <div>
-<th><%= link_to "新着順", :sort => "released_at" %></th>
-<th><%= link_to "投稿者名順", :sort => "name" %></th>
-<th><%= link_to "古い順", :sort => "released_at" %></th>
+  <%= search_form_for @q do |f| %>
+    <form name="sort_form">
+      <select name="sort" onchange="dropsort()">
+        <option value=""> 並び替え </option>
+        <option value="http://localhost:3000/?order=updated_at">
+        新着順</option>
+        <option value=>
+        名前順</option>
+        <option value="/messages">
+        古い順</option>
+      </select>
+    </form>
 
 
-  <%= form_for @message do |f| %>
-  <%= f.select :created_at,[["新着順","acs"], ["名前順","name"], ["古い順","desc"]], {class: 'CreateMessages'} %>
-
-  <%= search_form_for @search do |f| %>
-    <%= f.search_field :body_cont,
+  <%= search_form_for @q do |f| %>
+    <%= f.search_field :title_cont,
     :placeholder =>"検索ワードを入力" %>
-    <%= f.submit %>
+  <%= f.submit %>
     
-  </div>
+</div>
 <% end %>
-
-
 
 <div> <%= paginate @messages %></div>
 <% end %>
@@ -44,7 +48,7 @@
     <%= msg.id %> : <%= msg.title %> : 
     <%= msg.created_at.to_s(:datetime_jp) %><br>
     <pre><%= msg.body %>
-  <%= link_to '削除', message_path(messages),
+  <%= link_to '削除', message_path(msg),
     method: :delete, 
     data: {confirm: "削除してもよろしいですか？"} %>
   </pre>
