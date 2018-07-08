@@ -1,21 +1,11 @@
 class MessagesController < ApplicationController
-  before_filter :set_search
-  helper_method :sort_column, :sort_direction
+
 
   # NOTE: 表示 検索
   def index
     @message = Message.new
 
-    @q = Message.search(params[:q])
-
-    @q.sorts = 'created_at asc' if @q.sorts.blank?
-
-    @messages = @q.result
-
-    if params[:all].blank?
-      @messages = @messages.page(params[:page]).per(5)
-    end
-
+    @q, @messages = search
   end
 
   # NOTE: 書き込み
@@ -23,10 +13,11 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.save
-      redirect_to action: :index
+      return redirect_to action: :index
     else
-      @messages = Message.message_list
-      render :index
+      @q, @messages = search
+
+      return render :index
     end
   end
 
@@ -34,18 +25,14 @@ class MessagesController < ApplicationController
   def destroy
     @message = Message.find(params[:id])
 
-    # TODO: 削除用パスワードvalidation作成
-    if @message.password == params.require(:message)[:password] && @message.destroy!
+    if @message.check_destroy_password(params[:message][:password])
       flash[:notice] = '削除ok'
-      redirect_to :action => :index
+      return redirect_to :action => :index
     else
       flash[:notice] = '削除ng'
-      redirect_to :action => :index
+      @q, @messages = search
+      return render :action => :index
     end
-  end
-
-  def set_search
-    @search = Message.search(params[:q])
   end
 
   private
@@ -53,24 +40,22 @@ class MessagesController < ApplicationController
   def message_params
     params.require(:message)
       .permit(
-        :title,
+        :name,
         :body,
         :password
       )
   end
 
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
+  def search
+    q = Message.search(params[:q])
+    q.sorts = 'created_at asc' if q.sorts.blank?
 
-  def sort_column
-    Message.column_names.include?(params[:sort]) ? params[:sort] : "name"
-  end
+    messages = q.result
 
-  #def search
-  #params[:q] ||= {}
-  #params[:q][:s] = %w(author_id category_name created) # 複数指定は配列を渡す
-  #@q = Message.search params[:q]
-  #@q.result
-  #end
+    if params[:all].blank?
+      messages = messages.page(params[:page]).per(5)
+    end
+
+    return q, messages
+  end
 end

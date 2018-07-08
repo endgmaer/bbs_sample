@@ -11,7 +11,7 @@
 <%= form_for(@message) do |f| %>
   <p>投稿</p>
   <div>
-    <%= f.text_field :title, size: '25', placeholder: 'お名前を入力してください' %>
+    <%= f.text_field :name, size: '25', placeholder: 'お名前を入力してください' %>
   </div>
   <div>
     <%= f.password_field :password, size: '25', placeholder: '削除用パスワードを入力' %>
@@ -27,10 +27,10 @@
 <div>
   <%=
     select_tag 'sort_order',
-               options_for_select([["新着順", "#{sort_url @search, :created_at, default_order: :asc}"], ["名前順", "#{sort_url @search, :title, default_order: :asc}"], ["古い順", "#{sort_url @search, :created_at, default_order: :desc}"]])
+               options_for_select([["新着順", "#{sort_url @q, :created_at, default_order: :asc}"], ["名前順", "#{sort_url @q, :title, default_order: :asc}"], ["古い順", "#{sort_url @q, :created_at, default_order: :desc}"]])
   %>
 
-  <%= search_form_for @search do |f| %>
+  <%= search_form_for @q do |f| %>
     <%= f.search_field :body_cont, placeholder: '検索ワードを入力' %>
     <%= f.submit %>
   <% end %>
@@ -46,12 +46,12 @@
 
 <% @messages.each do |message| %>
   <div>
-    <%= message.id %> : <%= message.title %> : <%= message.created_at.to_s(:datetime_jp) %>
+    <%= message.id %> : <%= message.name %> : <%= message.created_at.to_s(:datetime_jp) %>
     <br>
     <%= message.body %>
   </div>
   <%= form_for(message, url: message_path(id: message.id), method: :delete) do |f| %>
-    <%= f.text_field :password, placeholder: '削除パスワードを入力' %>
+    <%= f.text_field :password, value: '', placeholder: '削除パスワードを入力', autocomplete: 'off' %>
     <%= f.submit '削除' %>
   <% end %>
 <% end %>
