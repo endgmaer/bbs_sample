@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_filter :set_search  
+  before_action :set_search  
   helper_method :sort_column, :sort_direction
 
 # 表示 検索
