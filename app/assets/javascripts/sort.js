@@ -4,5 +4,5 @@ function dropsort() {
 }
 
 $(document).on('change', '#sort_order', function() {  // フォームの値が変わったときになにかするよ！
-   
+    
 });
