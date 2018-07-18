@@ -11,8 +11,20 @@
   <div>
     <%= f.text_area :body, :size => "30x7", :placeholder => "投稿内容を入力してください" %>
   </div>
+  
   <%= f.submit '投稿する' %>
-  <% if @message.errors.any? %>
+  
+  <% if flash[:error_messages] %>
+    <div class="alert alert-danger">
+      <ul>
+        <% flash[:error_messages].each do |msg| %>
+          <li><%= msg %></li>li>
+        <% end %>
+      </ul>  
+    </div>
+  <% end %>
+
+
     <% @message.errors.full_messages.each do |err| %>
       <font color="red">
         <%= err %>

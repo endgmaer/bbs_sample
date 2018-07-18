@@ -16,14 +16,14 @@ gem 'binding_of_caller'
 gem 'ransack'
 gem 'kaminari'
 gem 'nokogiri', '1.8.4'
-
+gem 'better_errors'
+gem 'pry-byebug'
 
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 10.0', '>= 10.0.2'
-  gem 'better_errors'
-  gem 'pry-byebug'
+  
 end
 
 group :development do

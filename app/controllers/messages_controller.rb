@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
   def index
     @messages = Message.all
     #@messages = Message.message_list
-    @message = Message.new
+    
     @messages = Message.all.order(params[:sort])
     #@search = Message.ransack(params[:q])
     #@search.build_sort if @search.sorts.empty?
@@ -24,16 +24,26 @@ class MessagesController < ApplicationController
     end
   end
 
+  def new
+    @message = Message.new(flash[:all])
+  end
+
   # 書き込み
   def create
-    @message = Message.create(params.require(:message)
+    @message = Message.new(params.require(:message) #create⇨new
       .permit(:title, :body))
     if @message.save
       redirect_to :action => :index
     else
-      @messages = Message.message_list
-      render :index
-    end
+      redirect_to message_path, flash: {
+        message: message,
+        error_messages: message.errors.full_messages
+      }
+      
+
+      #@messages = Message.message_list
+      #render :index
+    
   end
 
 
@@ -69,8 +79,5 @@ class MessagesController < ApplicationController
     #@q = Message.search params[:q]
     #@q.result
   #end
-
-
-
- 
+  end
 end
