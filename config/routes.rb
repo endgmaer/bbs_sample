@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
- 
+  resources(:messages)
   # root 'welcome#index'
   root 'messages#index'
   #delete 'messages/delete/:id' => 'messages#delete', as: :message_delete
-  resources(:messages)
+  
 
   #post 'messages', to: 'messages#create'
 
