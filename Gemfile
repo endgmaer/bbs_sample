@@ -10,10 +10,13 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'geocoder', '~> 1.4', '>= 1.4.9'
 gem 'coderay', '~> 1.1', '>= 1.1.2'
 gem 'binding_of_caller'
 gem 'ransack'
 gem 'kaminari'
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
