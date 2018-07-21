@@ -30,14 +30,14 @@ class MessagesController < ApplicationController
 
   # 書き込み
   def create
-    @message = Message.new(params.require(:message) #create⇨new
-      .permit(:title, :deletepwd, :body))
+    @message = Message.new(message_params)
+
     if @message.save
       redirect_to :action => :index
     else
       redirect_to messages_path, flash: {
-        message: @message,
-        error_messages: @message.errors.full_messages
+          message: @message,
+          error_messages: @message.errors.full_messages
       }
     end
 
@@ -62,7 +62,15 @@ class MessagesController < ApplicationController
     @q = Message.search(params[:q])
   end
 
-#private
+  private
+
+  def message_params
+    params.require(:message).permit(
+        :title,
+        :deletepwd,
+        :body
+    )
+  end
 
   #def sort_direction
    # %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
