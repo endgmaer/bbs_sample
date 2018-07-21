@@ -60,7 +60,6 @@ GEM
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.23)
-    geocoder (1.4.9)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     i18n (0.9.5)
@@ -194,12 +193,10 @@ DEPENDENCIES
   byebug (~> 10.0, >= 10.0.2)
   coderay (~> 1.1, >= 1.1.2)
   coffee-rails (~> 4.1.0)
-  geocoder (~> 1.4, >= 1.4.9)
   i18n_generators
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
-  pry (~> 0.11.3)
   pry-byebug
   rails (= 4.2.6)
   ransack
@@ -212,4 +209,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.16.2
+   1.16.3
