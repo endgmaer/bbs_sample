@@ -7,7 +7,6 @@ class MessagesController < ApplicationController
     @messages = Message.all
     #@messages = Message.message_list
     @message = Message.new
-    @messages = Message.all.order(params[:sort])
     #@search = Message.ransack(params[:q])
     #@search.build_sort if @search.sorts.empty?
     @q = Message.search(params[:q])
@@ -15,7 +14,6 @@ class MessagesController < ApplicationController
     @messages = @q.result(distinct: true)
     #@messages = Message.all.order(sort_column + ' ' + sort_direction)
     #@orders = Message.order(params[:sortway])
-    @messages = Message.all.order(params[:sort])
     @messages = Message.page(params[:page])
     if params[:all].present?
        @messages = @messages.page(params[:page])
