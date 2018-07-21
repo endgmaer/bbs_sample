@@ -33,16 +33,13 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.save
-      redirect_to :action => :index
+      redirect_to action: :index
     else
       redirect_to messages_path, flash: {
           message: @message,
           error_messages: @message.errors.full_messages
       }
     end
-
-    #@messages = Message.message_list
-    #render :index
   end
 
 
