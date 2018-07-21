@@ -39,11 +39,10 @@ class MessagesController < ApplicationController
         message: @message,
         error_messages: @message.errors.full_messages
       }
+    end
 
-
-      #@messages = Message.message_list
-      #render :index
-
+    #@messages = Message.message_list
+    #render :index
   end
 
 
@@ -80,5 +79,4 @@ class MessagesController < ApplicationController
     #@q = Message.search params[:q]
     #@q.result
   #end
-  end
 end
