@@ -31,7 +31,7 @@ class MessagesController < ApplicationController
   # 書き込み
   def create
     @message = Message.new(params.require(:message) #create⇨new
-      .permit(:title, :body))
+      .permit(:title, :deletepwd, :body))
     if @message.save
       redirect_to :action => :index
     else
