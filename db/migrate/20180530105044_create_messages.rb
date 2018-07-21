@@ -1,10 +1,11 @@
-class CreateMessages < ActiveRecord::Migration
+class CreateMessages < ActiveRecord::Migration[5.2]
   def change
     create_table :messages do |t|
       t.string :title
       t.text :body
+      t.string :deletepwd
 
-      t.timestamps null: false
+      t.timestamps
     end
   end
 end
