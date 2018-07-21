@@ -36,8 +36,8 @@ class MessagesController < ApplicationController
       redirect_to :action => :index
     else
       redirect_to messages_path, flash: {
-        message: message,
-        error_messages: message.errors.full_messages
+        message: @message,
+        error_messages: @message.errors.full_messages
       }
 
 
