@@ -4,9 +4,11 @@ class MessagesController < ApplicationController
 
 # 表示 検索
   def index
+    # NOTE: 新規投稿フォーム用の変数を作成
+    @message = Message.new
+
     @messages = Message.all
     #@messages = Message.message_list
-    @message = Message.new
     #@search = Message.ransack(params[:q])
     #@search.build_sort if @search.sorts.empty?
     @q = Message.search(params[:q])
