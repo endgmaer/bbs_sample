@@ -11,28 +11,29 @@
   <div>
     <%= f.text_area :body, :size => "30x7", :placeholder => "投稿内容を入力してください" %>
   </div>
-  
+
   <%= f.submit '投稿する' %>
-  
+
   <% if flash[:error_messages] %>
     <div class="alert alert-danger">
       <ul>
         <% flash[:error_messages].each do |msg| %>
-          <li><%= msg %></li>li>
+          <li><%= msg %></li>
+          li>
         <% end %>
-      </ul>  
+      </ul>
     </div>
   <% end %>
 
 
-    <% @message.errors.full_messages.each do |err| %>
-      <font color="red">
-        <%= err %>
-      </font>
-      <br>
-    <% end %>
+  <% @message.errors.full_messages.each do |err| %>
+    <font color="red">
+      <%= err %>
+    </font>
     <br>
-  
+  <% end %>
+  <br>
+
 <% end %>
 
 <hr>
@@ -62,7 +63,7 @@
       <%= msg.body %>
       <%= link_to '削除', message_path(msg),
                   method: :delete,
-                  data: { confirm: "削除してもよろしいですか？" } %>
+                  data: {confirm: "削除してもよろしいですか？"} %>
     </pre>
   <% end %>
 </div>
