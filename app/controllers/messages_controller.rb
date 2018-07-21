@@ -7,21 +7,37 @@ class MessagesController < ApplicationController
     # NOTE: 新規投稿フォーム用の変数を作成
     @message = Message.new
 
-    @messages = Message.all
-    #@messages = Message.message_list
-    #@search = Message.ransack(params[:q])
-    #@search.build_sort if @search.sorts.empty?
-    @q = Message.search(params[:q])
-    @q.sorts = 'id asc' if @q.sorts.empty?
-    @messages = @q.result(distinct: true)
-    #@messages = Message.all.order(sort_column + ' ' + sort_direction)
-    #@orders = Message.order(params[:sortway])
-    @messages = Message.page(params[:page])
+    # NOTE: ransackで検索を行う
+    @q = Message.ransack(params[:q])
+
+    # NOTE: paramsにソート順が指定されているか確認しなければidの昇順にする
+    @q.sorts = 'id asc' if params[:q].try(:[], :s).blank?
+
+    # NOTE: 検索結果を取得し変数に入れる
+    @messages = @q.result
+
+    # NOTE: 現在のページ数に合ったレコードを出す(.page(params[:page]))
+    # NOTE: paramsに全件表示するとなっていれば全件そうでなければ5件表示
     if params[:all].present?
-       @messages = @messages.page(params[:page])
+      @messages = @messages.page(params[:page])
     else
-       @messages = @messages.page(params[:page]).per(5)
+      @messages = @messages.page(params[:page]).per(5)
     end
+
+    # @messages = Message.all
+    # #@messages = Message.message_list
+    # #@search = Message.ransack(params[:q])
+    # #@search.build_sort if @search.sorts.empty?
+    # @q = Message.search(params[:q])
+    # @messages = @q.result(distinct: true)
+    # #@messages = Message.all.order(sort_column + ' ' + sort_direction)
+    # #@orders = Message.order(params[:sortway])
+    # @messages = Message.page(params[:page])
+    # if params[:all].present?
+    #    @messages = @messages.page(params[:page])
+    # else
+    #    @messages = @messages.page(params[:page]).per(5)
+    # end
   end
 
   #def new
