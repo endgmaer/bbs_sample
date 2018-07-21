@@ -36,16 +36,14 @@
 <% end %>
 
 <hr>
-<%= select_tag 'sort_order', 
-    options_for_select([["新着順", sort_url(@q,
-                         :created_at, default_order: :asc)], 
-                        ["名前順", sort_url(@q,
-                         :title, default_order: :asc)], 
-                        ["古い順", sort_url(@q,
-                         :created_at, default_order: :desc)]])%>
 <%=
-select_tag 'sort_order',
-options_for_select([["新着順", "#{sort_url @q, :created_at, default_order: :asc}"], ["名前順", "#{sort_url @q, :title, default_order: :asc}"], ["古い順", "#{sort_url @q, :created_at, default_order: :desc}"]])
+  select_tag 'sort_order', options_for_select(
+      [
+          ["新着順", sort_url(@q, :created_at, default_order: :asc)],
+          ["名前順", sort_url(@q, :title, default_order: :asc)],
+          ["古い順", sort_url(@q, :created_at, default_order: :desc)]
+      ]
+  )
 %>
 
 <%= search_form_for @q do |f| %>
