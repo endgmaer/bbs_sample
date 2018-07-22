@@ -59,13 +59,17 @@
 <div>
   <% @messages.each do |msg| %>
     <%= msg.id %> : <%= msg.title %> : <%= msg.created_at.to_s(:datetime_jp) %><br>
-    <pre>
-      <%= msg.body %>
-      <%= link_to '削除', message_path(msg),
-                  method: :delete,
-                  data: {confirm: "削除してもよろしいですか？"} %>
-    </pre>
-  <% end %>
+<pre>
+<%= msg.body %>
+
+<%= 
+  link_to '削除', message_path(msg),
+  method: :delete,data: 
+  {confirm: "削除してもよろしいですか？"} 
+%>
+
+</pre>
+<% end %>
 </div>
 
 <div>
