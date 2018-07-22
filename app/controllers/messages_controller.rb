@@ -38,13 +38,11 @@ class MessagesController < ApplicationController
   end
 
   # 削除
-  def delete
+  def destroy
     @message = Message.find(params[:id])
-    if @messages[:deletepwd] == params[:message][:deletepwd]
-       @messages.destroy
-    
+    @message.delete
     redirect_to messages_path
-    end
+    #@posting.errors.messages
   end
 
   private
