@@ -62,11 +62,9 @@
 <pre>
 <%= msg.body %>
 
-<%= 
-  link_to '削除', message_path(msg),
-  method: :delete,data: 
-  {confirm: "削除してもよろしいですか？"} 
-%>
+<%= form_tag messages_path(msg), method: :delete do %>
+<%= password_field_tag 'password', '', :placeholder => "削除用パスワード" %><input value='削除' type='submit' id='submit-form'/>
+<% end %>
 
 </pre>
 <% end %>

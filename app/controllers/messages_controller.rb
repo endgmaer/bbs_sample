@@ -42,8 +42,19 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
     @message.delete
     redirect_to messages_path
-    #@posting.errors.messages
   end
+
+  def destroy
+  @message = Mesaage.find(params[:id])
+  @password = params[:deletepwd]
+
+  if @message and authenticated
+    @message.destroy
+    respond_to do |f|
+      format.html { redirect_to messages_path, notice: 'メッセージは削除されました。' }
+    end
+  end
+end
 
   private
 
