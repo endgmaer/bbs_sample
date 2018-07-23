@@ -62,7 +62,7 @@
 <pre>
 <%= msg.body %>
 <%= form_tag messages_path(msg), method: :delete do %>
-<%= password_field_tag 'password', '', :placeholder => "削除用パスワード" %><input value='削除' type='submit' id='submit-form'/>
+<%= password_field_tag 'password', '', :placeholder => "削除用パスワード" %><%= submit_tag '削除' %>
 <% end %>
 
 </pre>
