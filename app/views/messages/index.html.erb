@@ -65,6 +65,8 @@
 
   %>
 <%= password_field_tag 'password', '', :placeholder => "削除用パスワード" %><%= submit_tag '削除' %>
+
+<%= link_to "削除", '', message_path(@message.id), method: :delete %>
 <% end %>
 
 </pre>
