@@ -40,8 +40,10 @@ class MessagesController < ApplicationController
   # 削除
   def delete
     @message = Message.find(params[:id])
-    @message.delete = params[:deletepwd]
-    redirect_to messages_path
+    if request.post? then
+      @message.delete
+      redirect_to messages_path
+    end
   end
 
   private
