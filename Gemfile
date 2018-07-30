@@ -22,17 +22,15 @@ gem 'better_errors'
 
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '~> 10.0', '>= 10.0.2'
+  gem 'pry-rails'
+  gem 'pry-doc'
   gem 'pry-byebug'
+  gem 'pry-stack_explorer'
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 3.6.2'
   gem 'i18n_generators'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
 

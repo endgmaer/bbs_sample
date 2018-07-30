@@ -41,6 +41,7 @@ class MessagesController < ApplicationController
   def delete
        @message = Message.find(params[:id])
        @message.delete
+       binding.pry
        redirect_to messages_path
   end
 
