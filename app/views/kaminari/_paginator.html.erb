@@ -8,8 +8,7 @@
 -%>
 <%= paginator.render do -%>
   <nav class="pagination" role="navigation" aria-label="pager">
-    <%= link_to '全てを表示', controller: "messages",
-     action: "index", order: "created_at" %>
+    <%= link_to '全てを表示', messages_path(@messages) %>
     <%= first_page_tag unless current_page.first? %>
     <%= prev_page_tag unless current_page.first? %>
     <% each_page do |page| -%>

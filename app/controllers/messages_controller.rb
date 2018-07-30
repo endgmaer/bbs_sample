@@ -23,6 +23,11 @@ class MessagesController < ApplicationController
     end
   end
 
+
+  def all
+      @messages = Message.all
+  end
+
   # 書き込み
   def create
     @message = Message.new(message_params)
