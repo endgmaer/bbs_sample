@@ -38,7 +38,7 @@ class MessagesController < ApplicationController
   end
 
   # 削除
-  def destroy
+  def delete
        @message = Message.find(params[:id])
        @message.delete
        redirect_to messages_path

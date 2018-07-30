@@ -61,12 +61,9 @@
     <%= msg.id %> : <%= msg.title %> : <%= msg.created_at.to_s(:datetime_jp) %><br>
 <pre>
 <%= msg.body %>
-<%= form_tag messages_path(msg), method: :delete do 
+<%= form_for @message, method: :delete do |f| %>
+<%= f.password_field :password, :placeholder => "削除用パスワード" %><%= f.submit "削除" %>
 
-  %>
-<%= password_field_tag 'password', '', :placeholder => "削除用パスワード" %><%= submit_tag '削除' %>
-
-<%= link_to "削除", '', message_path(@message.id), method: :delete %>
 <% end %>
 
 </pre>
