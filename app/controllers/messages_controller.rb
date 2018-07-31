@@ -5,6 +5,8 @@ class MessagesController < ApplicationController
     # NOTE: 新規投稿フォーム用の変数を作成
     @message = Message.new
 
+    @messages = Message.all
+
     # NOTE: ransackで検索を行う
     @q = Message.ransack(params[:q])
 
@@ -24,9 +26,7 @@ class MessagesController < ApplicationController
   end
 
 
-  def all
-      @messages = Message.all
-  end
+  
 
   # 書き込み
   def create
