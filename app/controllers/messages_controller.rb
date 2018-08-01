@@ -3,10 +3,7 @@ class MessagesController < ApplicationController
   # 表示 検索
   def index
     # NOTE: 新規投稿フォーム用の変数を作成
-    binding.pry
     @message = Message.new
-
-    @messages = Message.all
 
     # NOTE: ransackで検索を行う
     @q = Message.ransack(params[:q])
@@ -24,6 +21,12 @@ class MessagesController < ApplicationController
     else
       @messages = @messages.page(params[:page]).per(5)
     end
+  end
+
+  def all
+     # NOTE: 全メッセージを取得
+    @messages = Message.all
+
   end
 
 

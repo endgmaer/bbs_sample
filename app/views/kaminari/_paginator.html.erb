@@ -8,17 +8,9 @@
 -%>
 <%= paginator.render do -%>
   <nav class="pagination" role="navigation" aria-label="pager">
-    <% @messages.each do |msg| %>
-      <%= link_to '全てを表示', (messages, class: "pagination") do %>
-          <%= msg.id %> : <%= msg.title %> : <%= msg.created_at.to_s(:datetime_jp) %><br>
-              <pre>
-              <%= msg.body %>
-              <%= form_for @message, method: :delete do |f| %>
-              <%= f.password_field :password, :placeholder => "削除用パスワード" %><%= f.submit "削除" %>
-          <% end %>
-      <% end %>
-    <% end %>
     
+    <%= link_to '全てを表示', controller: 'messages', action: 'all' do %>
+    <% end %>
     
     <%= first_page_tag unless current_page.first? %>
     <%= prev_page_tag unless current_page.first? %>
@@ -35,3 +27,4 @@
     <% end %>
   </nav>
 <% end %>
+
