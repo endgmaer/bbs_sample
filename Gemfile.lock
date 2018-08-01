@@ -213,6 +213,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  byebug
   coderay (~> 1.1, >= 1.1.2)
   coffee-rails (~> 4.2.2)
   geocoder (~> 1.4, >= 1.4.9)

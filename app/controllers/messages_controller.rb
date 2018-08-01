@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
   # 表示 検索
   def index
     # NOTE: 新規投稿フォーム用の変数を作成
+    binding.pry
     @message = Message.new
 
     @messages = Message.all
@@ -46,7 +47,6 @@ class MessagesController < ApplicationController
   def delete
        @message = Message.find(params[:id])
        @message.delete
-       binding.pry
        redirect_to messages_path
   end
 

@@ -17,15 +17,16 @@ gem 'ransack'
 gem 'kaminari'
 gem 'nokogiri', '1.8.4'
 gem 'better_errors'
-
+gem 'byebug'
+gem 'pry-rails'
+gem 'pry-doc'
+gem 'pry-byebug'
+gem 'pry-stack_explorer'
 
 
 
 group :development, :test do
-  gem 'pry-rails'
-  gem 'pry-doc'
-  gem 'pry-byebug'
-  gem 'pry-stack_explorer'
+  
 end
 
 group :development do
